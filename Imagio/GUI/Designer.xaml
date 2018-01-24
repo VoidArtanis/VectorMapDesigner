@@ -1,0 +1,179 @@
+﻿<controls:MetroWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Imagio"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:ee="http://schemas.microsoft.com/expression/2010/effects"
+    xmlns:controls1="clr-namespace:Imagio.GUI.Controls"
+    xmlns:converter="clr-namespace:Imagio.Converter"
+    xmlns:properties="clr-namespace:Imagio.Properties"
+    x:Class="Imagio.GUI.Designer"
+    mc:Ignorable="d"
+    Title="Designer" Height="809.129" Width="1028.391" BorderBrush="Black" WindowState="Maximized">
+    <controls:MetroWindow.Resources>
+        <converter:PercentageToDecimal x:Key="converter" />
+    </controls:MetroWindow.Resources>
+    <Grid>
+        <Menu x:Name="menu" Height="31" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open Project" Click="MenuItem_Open" />
+                <MenuItem Header="Save Project" Click="MenuItem_Save" />
+                <MenuItem Header="Export Image" Click="MenuItem_OnClick" />
+            </MenuItem>
+            <MenuItem />
+        </Menu>
+        <Grid Margin="99,31,0.391,27.629">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+
+            <GridSplitter Grid.Column="1" x:Name="gridSplitter" Background="#FFC7C7C7" BorderThickness="2,0"
+                          BorderBrush="#FFACACAC" HorizontalAlignment="Stretch" />
+
+            <controls1:PanningCanvas Grid.Column="0" HorizontalScrollBarVisibility="Auto" Margin="0,0,4,0.371"
+                                     x:Name="PanningCanvas">
+                <Grid>
+                    <Canvas x:Name="MapCanvas" ClipToBounds="True" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Background="GhostWhite" Width="{Binding ElementName=TxtMapWidth, Path=Text, Mode=TwoWay}"
+                            Height="{Binding ElementName=TxtMapHeight, Path=Text, Mode=TwoWay}">
+                        <Canvas.LayoutTransform>
+                            <ScaleTransform x:Name="MapCanvasScaleTransform"
+                                            ScaleX="{Binding ElementName=TxtMapZoom, Path=Text,  Converter={StaticResource converter}}"
+                                            ScaleY="{Binding ElementName=TxtMapZoom, Path=Text,  Converter={StaticResource converter}}" />
+                        </Canvas.LayoutTransform>
+                    </Canvas>
+                    <controls1:GridCanvas x:Name="GridCanvas" Width="{Binding ElementName=TxtMapWidth, Path=Text }"
+                                          Height="{Binding ElementName=TxtMapHeight, Path=Text }"
+                                          HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="True">
+                        <Canvas.LayoutTransform>
+                            <ScaleTransform x:Name="GridCanvasScaleTransform"
+                                            ScaleX="{Binding ElementName=TxtMapZoom, Path=Text,  Converter={StaticResource converter}}"
+                                            ScaleY="{Binding ElementName=TxtMapZoom, Path=Text,  Converter={StaticResource converter}}" />
+                        </Canvas.LayoutTransform>
+                    </controls1:GridCanvas>
+                </Grid>
+            </controls1:PanningCanvas>
+            <ScrollViewer Grid.Column="2">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock TextWrapping="Wrap" Text="Selected Object" Width="96.5" HorizontalAlignment="Left"
+                               Margin="3,4,0,6" FontWeight="Bold" />
+                    <StackPanel x:Name="SelectedImageControls" Orientation="Vertical" Width="186" IsEnabled="False">
+                        <Image x:Name="selectedImage" Height="158" Margin="7,4,7,8" d:LayoutOverrides="Width" />
+                        <StackPanel Margin="3,0,0,0" Orientation="Horizontal">
+                            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Text="Location: " />
+                            <TextBlock x:Name="SelectedLayerX" TextWrapping="Wrap" HorizontalAlignment="Left" />
+                            <TextBlock x:Name="SelectedLayerY" TextWrapping="Wrap" HorizontalAlignment="Left" />
+                        </StackPanel>
+                        <StackPanel Margin="3,0,0,8" Orientation="Horizontal">
+                            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Text="Size: " Width="51.01" />
+                            <TextBlock x:Name="SelectedLayerWidth" TextWrapping="Wrap" HorizontalAlignment="Left" />
+                            <TextBlock x:Name="SelectedLayerHeight" TextWrapping="Wrap" HorizontalAlignment="Left" />
+                        </StackPanel>
+                        <StackPanel Height="24.666" Orientation="Horizontal" d:LayoutOverrides="Width">
+                            <TextBlock Margin="7,0,10,0" TextWrapping="Wrap" Text="Mode" VerticalAlignment="Center"
+                                       Width="36" />
+                            <ComboBox x:Name="SelectedImageStretch" Width="120" BorderThickness="0">
+                                <ComboBoxItem Content="Cover" />
+                                <ComboBoxItem Content="Contain" />
+                                <ComboBoxItem Content="Stretch" />
+                                <ComboBoxItem Content="None" />
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+                    <Path Data="M6,174 L159.00327,174" Height="2" Stretch="Fill" Margin="8,8,8,0" Stroke="#FF919191" />
+                    <TextBlock TextWrapping="Wrap" Text="Map Dimensions" Width="96.5" HorizontalAlignment="Left"
+                               Margin="3,4,0,6" FontWeight="Bold" />
+                    <StackPanel Height="24.666" Orientation="Horizontal">
+                        <TextBlock Margin="7,0,10,0" TextWrapping="Wrap" Text="Width" VerticalAlignment="Center"
+                                   Width="36" />
+                        <TextBox x:Name="TxtMapWidth" TextWrapping="Wrap" Margin="0,0,0,-1.334" Width="110.383"
+                                 BorderThickness="0" Text="1600" />
+                        <TextBlock Margin="0,3.019,0,0" TextWrapping="Wrap" Text="px" Width="15.333" />
+                    </StackPanel>
+                    <StackPanel Height="24.666" Orientation="Horizontal">
+                        <TextBlock Margin="7,0,10,0" TextWrapping="Wrap" Text="Height" VerticalAlignment="Center"
+                                   Width="36" />
+                        <TextBox x:Name="TxtMapHeight" TextWrapping="Wrap" Margin="0,0,0,-1.334" Width="110.216"
+                                 BorderThickness="0" Text="1000" />
+                        <TextBlock Margin="0,3.019,0,0" TextWrapping="Wrap" Text="px" Width="15.333" />
+                    </StackPanel>
+                    <Path Data="M6,174 L159.00327,174" Height="2" Stretch="Fill" Margin="8,10,8,0" Stroke="#FF919191" />
+                    <TextBlock TextWrapping="Wrap" Text="Zoom" Width="96.5" HorizontalAlignment="Left" Margin="3,4,0,6"
+                               FontWeight="Bold" />
+                    <StackPanel Height="24.666" Orientation="Horizontal">
+                        <TextBlock Margin="7,0,10,0" TextWrapping="Wrap" Text="Value" VerticalAlignment="Center"
+                                   Width="36" />
+                        <TextBox x:Name="TxtMapZoom" TextWrapping="Wrap" Margin="0,0,0,-1.334" Width="111.716"
+                                 BorderThickness="0" Text="100" />
+                        <TextBlock Margin="0,3.019,0,0" TextWrapping="Wrap" Text="%" Width="15.333" />
+                    </StackPanel>
+                    <Button x:Name="btnSendBack" Content="Send Back" BorderThickness="0,0,0,1" Click="btnSendBack_Click" Margin="0,15,0,0" />
+                    <Button x:Name="btnSendBack_Copy" Content="Send to Front" BorderThickness="0,0,0,1" Click="BtnEllipseDraw_OnClick" Margin="0,5,0,0" />
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <Border Height="28" VerticalAlignment="Bottom" BorderThickness="0,1,0,0" BorderBrush="#FF999999"
+                Margin="99,0,0,0">
+            <Grid Background="#FF252525">
+                <StackPanel HorizontalAlignment="Right" Margin="0,5,10,0" Orientation="Horizontal">
+                    <TextBlock x:Name="txtRatio" TextWrapping="Wrap" Text="1m : 50px" Foreground="#FFCFCFCF"
+                               d:LayoutOverrides="TopPosition, BottomPosition" Margin="0,0,16,0" />
+                    <TextBlock x:Name="txtCursor" TextWrapping="Wrap" Text="x: 0, y:0" Foreground="#FFCFCFCF"
+                               Margin="0,0,16,0" Width="105" />
+                    <TextBlock x:Name="txtCursorMeters" TextWrapping="Wrap" Text="x: 0, y:0" Foreground="#FFCFCFCF"
+                               Width="120" />
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border HorizontalAlignment="Left" Margin="0,31,0,-0.371" Width="99" BorderThickness="0,0,1,0"
+                BorderBrush="#FF999999">
+
+            <StackPanel Orientation="Vertical" Background="Black" HorizontalAlignment="Left" Width="99" Margin="0,0,-1,0">
+                <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="DRAWING" VerticalAlignment="Center" Height="23"
+                           TextAlignment="Center" Background="#FF232323" Foreground="White" Margin="0,0,0,3" Padding="0,2,0,0" />
+                <Button x:Name="btnPolygonDraw" BorderThickness="0" Background="{x:Null}"
+                        Click="btnPolygonDraw_Click" Height="64" Margin="4,0" BorderBrush="#4CFFFFFF"  FontFamily="Shape Blocks Solid" Content="Z" 
+                        FontSize="44" Padding="0" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                <Button x:Name="btnRectDraw" Content="s" BorderThickness="0" Click="BtnRectDraw_OnClick" VerticalAlignment="Top" HorizontalAlignment="Center" Height="64" Width="64" Background="{x:Null}" FontFamily="Shape Blocks Solid" FontSize="44" Padding="0" />
+                <Button x:Name="btnEllipseDraw" Content="1" BorderThickness="0" Click="BtnEllipseDraw_OnClick" HorizontalAlignment="Center" VerticalAlignment="Top" Width="64" Height="64" Padding="0,-8,0,0" Margin="4,4,4,0" FontSize="44" FontFamily="Shape Blocks Solid" Background="{x:Null}" />
+                <Button x:Name="btnImportImage" Content="&#xE9E5;" BorderThickness="0"
+                        PreviewMouseLeftButtonUp="btnImportImage_PreviewMouseLeftButtonUp" HorizontalAlignment="Center" Width="64" Click="btnImportImage_Click" VerticalAlignment="Top" Height="64" Margin="0,4,0,0" Background="{x:Null}" FontFamily="icomoon" FontSize="36" Padding="0" />
+                <Button x:Name="btnAddObject" Content="&#xEACC;" BorderThickness="0"
+                    Click="btnAddObject_Click" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" FontFamily="icomoon" Padding="4,0,0,0" Margin="4,4,0,0" Background="{x:Null}" />
+                <Grid Margin="0,13,0,4" Height="80">
+                    <Border x:Name="foregroundColorPanel" Background="Black" Height="40"
+                            BorderBrush="White" BorderThickness="1" VerticalAlignment="Center"
+                            MouseLeftButtonUp="foregroundColorPanel_MouseLeftButtonUp" Margin="23,12,36,28" HorizontalAlignment="Center" Width="40" />
+                    <Border x:Name="backgroundColorPanel" Background="#FFAE3535" BorderBrush="White"
+                            BorderThickness="1" Margin="38,26,21,0" Height="40" VerticalAlignment="Top"
+                            MouseLeftButtonUp="backgroundColorPanel_MouseLeftButtonUp" Width="40" />
+                </Grid>
+                <TextBlock x:Name="textBlock_Copy1" TextWrapping="Wrap" Text="OPTIONS" VerticalAlignment="Center"
+                           Height="23" TextAlignment="Center" Background="#FF232323" Foreground="White"
+                           Margin="0,10,0,3" Padding="0,2,0,0" />
+                <StackPanel Height="29" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,10">
+                    <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="Grid" VerticalAlignment="Center"
+                               HorizontalAlignment="Left" d:LayoutOverrides="LeftPosition, RightPosition"
+                               Margin="0,0,5,0" Foreground="#FFE0E0E0" />
+                    <controls:ToggleSwitchButton x:Name="MapToggle" Content="WWQ3" Height="25" Width="42.667"
+                                                 VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                 d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition"
+                                                 IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=DrawGrid}"
+                                                 Checked="MapToggle_Checked" Unchecked="MapToggle_Unchecked" />
+                </StackPanel>
+                <TextBlock x:Name="textBlock_Copy" TextWrapping="Wrap" Text="LIDAR" VerticalAlignment="Center"
+                    Height="23" TextAlignment="Center" Background="#FF6C1E00" Foreground="White"
+                    Margin="0,10,0,3" Padding="0,2,0,0" Width="98" />
+                <Button x:Name="btnCapture" Content="&#xE9AD;" BorderThickness="0"
+                    Click="btnCapture_Click_1" FontFamily="icomoon" FontSize="36" Width="64" Height="64" Background="{x:Null}" Margin="0,8,0,0" />
+                <Button x:Name="btnMeasure" Content="&#xEA35;" BorderThickness="0"
+                    Click="btnMeasure_Click" FontFamily="icomoon" FontSize="36" Width="64" Height="64" Background="{x:Null}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</controls:MetroWindow>

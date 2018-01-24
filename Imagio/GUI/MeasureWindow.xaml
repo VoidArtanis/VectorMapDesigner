@@ -1,0 +1,73 @@
+﻿<controls:MetroWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:controls1="clr-namespace:Imagio.GUI.Controls"
+    xmlns:converter="clr-namespace:Imagio.Converter"
+    xmlns:Properties="clr-namespace:Imagio.Properties"
+    x:Class="Imagio.GUI.MeasureWindow"
+    mc:Ignorable="d"
+    Title="Measurer" Height="492.414" Width="783.567" BorderBrush="Black" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <controls:MetroWindow.Resources>
+        <converter:PercentageToDecimal x:Key="converter" />
+    </controls:MetroWindow.Resources>
+    <Grid x:Name="Grid">
+
+        <Grid RenderTransformOrigin="0.5,0.5" Margin="0,1,0,0">
+
+
+
+
+            <Grid Background="#FF151515">
+                <controls1:GridCanvas x:Name="GridCanvas" Width="{Binding Text, ElementName=TxtMapWidth}"
+                                          Height="{Binding Text, ElementName=TxtMapHeight}"
+                                          HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="True">
+                    <controls1:GridCanvas.LayoutTransform>
+                        <ScaleTransform x:Name="GridCanvasScaleTransform"
+                                            ScaleX="{Binding Text, Converter={StaticResource converter}, ElementName=TxtMapZoom}"
+                                            ScaleY="{Binding Text, Converter={StaticResource converter}, ElementName=TxtMapZoom}" />
+                    </controls1:GridCanvas.LayoutTransform>
+                </controls1:GridCanvas>
+                <StackPanel Margin="0,82,4,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <TextBlock x:Name="txtDistance" TextWrapping="Wrap" Text="0" FontSize="122" Foreground="#FF00C146" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="textBlock1_Copy" TextWrapping="Wrap" Text="mm" FontSize="122" Foreground="#FF00C146" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Margin="265,247,265,151" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="btnLeft" Content="&#xE314;" BorderThickness="0" FontFamily="icomoon" FontSize="36" Width="64" Background="{x:Null}"   Padding="0,6" Foreground="White" RenderTransformOrigin="0.804,1.375" Height="64" />
+                    <TextBlock x:Name="textBlock2" TextWrapping="Wrap" Text="ROTATE" VerticalAlignment="Center" Margin="40,0" Foreground="White"/>
+                    <Button x:Name="btnRight" BorderThickness="0" FontFamily="icomoon" FontSize="36" Width="64" Background="{x:Null}"   Padding="0,6" Foreground="White" RenderTransformOrigin="0.804,1.375" Height="64" Margin="0" Content="&#xE315;" />
+                </StackPanel>
+                <Button x:Name="buttonbtnMeasure" Content="Measure" HorizontalAlignment="Left" Height="44" Margin="328,371,0,0" VerticalAlignment="Top" Width="122" Click="buttonbtnMeasure_Click"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="677,18,4,415" Width="97">
+                    <TextBlock x:Name="textBlock3" TextWrapping="Wrap" Text="LASER" VerticalAlignment="Center"
+                        HorizontalAlignment="Left" d:LayoutOverrides="LeftPosition, RightPosition"
+                        Margin="0,0,5,0" Foreground="#FFE0E0E0" />
+                    <controls:ToggleSwitchButton x:Name="LaserToggle" Content="WWQ3" Height="25" Width="42.667"
+                        VerticalAlignment="Center" HorizontalAlignment="Right"
+                        d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition"
+                        Unchecked="LaserToggle_Unchecked" Checked="LaserToggle_Checked" />
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+        <Border Height="28" VerticalAlignment="Bottom" BorderThickness="0,1,0,0" BorderBrush="#FF999999" Grid.Row="1">
+            <Grid Background="#FF252525">
+                <StackPanel HorizontalAlignment="Right"  Orientation="Horizontal" Width="72"/>
+                <TextBlock x:Name="txtStatus"   TextWrapping="Wrap" Text="Ready" VerticalAlignment="Center" Foreground="White" Margin="11,6,0,5" HorizontalAlignment="Left" Width="75"/>
+
+            </Grid>
+        </Border>
+        <Grid x:Name="GrdStartup" Height="583" VerticalAlignment="Top" Background="#FF1D1D1D"   Grid.RowSpan="2" d:IsHidden="True">
+            <Grid Margin="-79,144,-89,265" VerticalAlignment="Center" HorizontalAlignment="Center" Height="174" Width="946">
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="&#xE9AD;" VerticalAlignment="Top" FontFamily="icomoon" FontSize="108" Foreground="White"/>
+                <TextBlock x:Name="Status" HorizontalAlignment="Center" Margin="0,131,0,0" TextWrapping="Wrap" Text="Connecting" VerticalAlignment="Top" Foreground="#FFFBFBFB" FontSize="18"/>
+                <ProgressBar HorizontalAlignment="Center"   VerticalAlignment="Top" Width="163" Margin="0,165,0,0" Height="9" IsIndeterminate="True" Foreground="#FF00151F"/>
+
+            </Grid>
+        </Grid>
+        <StackPanel Margin="389,48.832,389,0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="1049,236,-391,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+    </Grid>
+</controls:MetroWindow>
